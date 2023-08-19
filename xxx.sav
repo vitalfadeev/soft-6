@@ -1,0 +1,150 @@
+o cls.chips.Chips s (null)
+ a id B 0
+ a x i [0, 0, 0, 0]
+ a y i [0, 0, 0, 0]
+ a w i [12, 0, 0, 0]
+ a h i [10, 0, 0, 0]
+ a rect S GridRect(0, 0, 12, 10)
+ a point S GridPoint(0, 0)
+ a gridsize i [48, 0, 0, 0]
+ a fg S SDL_Color(199, 199, 199, 255)
+ a bg S SDL_Color(0, 0, 0, 255)
+ a hoverable t false
+ a selectable t false
+ a dragable t false
+o cls.chip.chip.Chip s cls.o.inits.Init
+ a id B 0
+ a x i [1, 0, 0, 0]
+ a y i [1, 0, 0, 0]
+ a w i [5, 0, 0, 0]
+ a h i [2, 0, 0, 0]
+ a rect S GridRect(1, 1, 5, 2)
+ a point S GridPoint(1, 1)
+ a gridsize i [48, 0, 0, 0]
+ a fg S SDL_Color(199, 199, 199, 255)
+ a bg S SDL_Color(0, 0, 0, 255)
+ a hoverable t true
+ a selectable t true
+ a dragable t true
+o cls.chip.chipout.chipout.ChipOut s cls.o.inits.Init
+ a id B 0
+ a x i [2, 0, 0, 0]
+ a y i [1, 0, 0, 0]
+ a w i [1, 0, 0, 0]
+ a h i [1, 0, 0, 0]
+ a rect S GridRect(2, 1, 1, 1)
+ a point S GridPoint(2, 1)
+ a gridsize i [48, 0, 0, 0]
+ a fg S SDL_Color(199, 199, 199, 255)
+ a bg S SDL_Color(0, 0, 0, 255)
+ a hoverable t true
+ a selectable t false
+ a dragable t false
+r
+o cls.chip.chipout.chipout.ChipOut s cls.o.inits.Init
+ a id B 0
+ a x i [3, 0, 0, 0]
+ a y i [1, 0, 0, 0]
+ a w i [1, 0, 0, 0]
+ a h i [1, 0, 0, 0]
+ a rect S GridRect(3, 1, 1, 1)
+ a point S GridPoint(3, 1)
+ a gridsize i [48, 0, 0, 0]
+ a fg S SDL_Color(199, 199, 199, 255)
+ a bg S SDL_Color(0, 0, 0, 255)
+ a hoverable t true
+ a selectable t false
+ a dragable t false
+r
+o cls.chip.chipout.chipout.ChipOut s cls.o.inits.Init
+ a id B 0
+ a x i [4, 0, 0, 0]
+ a y i [1, 0, 0, 0]
+ a w i [1, 0, 0, 0]
+ a h i [1, 0, 0, 0]
+ a rect S GridRect(4, 1, 1, 1)
+ a point S GridPoint(4, 1)
+ a gridsize i [48, 0, 0, 0]
+ a fg S SDL_Color(199, 199, 199, 255)
+ a bg S SDL_Color(0, 0, 0, 255)
+ a hoverable t true
+ a selectable t false
+ a dragable t false
+r
+r
+o cls.chip.chip.Chip s cls.o.inits.Init
+ a id B 0
+ a x i [1, 0, 0, 0]
+ a y i [5, 0, 0, 0]
+ a w i [5, 0, 0, 0]
+ a h i [2, 0, 0, 0]
+ a rect S GridRect(1, 5, 5, 2)
+ a point S GridPoint(1, 5)
+ a gridsize i [48, 0, 0, 0]
+ a fg S SDL_Color(199, 199, 199, 255)
+ a bg S SDL_Color(0, 0, 0, 255)
+ a hoverable t true
+ a selectable t true
+ a dragable t true
+o cls.chip.chipout.chipout.ChipOut s cls.o.inits.Init
+ a id B 0
+ a x i [2, 0, 0, 0]
+ a y i [5, 0, 0, 0]
+ a w i [1, 0, 0, 0]
+ a h i [1, 0, 0, 0]
+ a rect S GridRect(2, 5, 1, 1)
+ a point S GridPoint(2, 5)
+ a gridsize i [48, 0, 0, 0]
+ a fg S SDL_Color(199, 199, 199, 255)
+ a bg S SDL_Color(0, 0, 0, 255)
+ a hoverable t true
+ a selectable t false
+ a dragable t false
+r
+o cls.chip.chipout.chipout.ChipOut s cls.o.inits.Init
+ a id B 0
+ a x i [3, 0, 0, 0]
+ a y i [5, 0, 0, 0]
+ a w i [1, 0, 0, 0]
+ a h i [1, 0, 0, 0]
+ a rect S GridRect(3, 5, 1, 1)
+ a point S GridPoint(3, 5)
+ a gridsize i [48, 0, 0, 0]
+ a fg S SDL_Color(199, 199, 199, 255)
+ a bg S SDL_Color(0, 0, 0, 255)
+ a hoverable t true
+ a selectable t false
+ a dragable t false
+r
+o cls.chip.chipout.chipout.ChipOut s cls.o.inits.Init
+ a id B 0
+ a x i [4, 0, 0, 0]
+ a y i [5, 0, 0, 0]
+ a w i [1, 0, 0, 0]
+ a h i [1, 0, 0, 0]
+ a rect S GridRect(4, 5, 1, 1)
+ a point S GridPoint(4, 5)
+ a gridsize i [48, 0, 0, 0]
+ a fg S SDL_Color(199, 199, 199, 255)
+ a bg S SDL_Color(0, 0, 0, 255)
+ a hoverable t true
+ a selectable t false
+ a dragable t false
+r
+r
+o cls.spiro.spiro.Spiro s (null)
+ a id B 0
+ a x i [7, 0, 0, 0]
+ a y i [3, 0, 0, 0]
+ a w i [5, 0, 0, 0]
+ a h i [2, 0, 0, 0]
+ a rect S GridRect(7, 3, 5, 2)
+ a point S GridPoint(7, 3)
+ a gridsize i [48, 0, 0, 0]
+ a fg S SDL_Color(199, 199, 199, 255)
+ a bg S SDL_Color(0, 0, 0, 255)
+ a hoverable t true
+ a selectable t true
+ a dragable t true
+r
+r

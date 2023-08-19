@@ -1,0 +1,12 @@
+{
+	"name": "soft6",
+	"description": "LaView",
+	"authors": ["vital"],
+	"copyright": "Copyright © 2023, vital",
+	"license": "proprietary",
+	"dependencies" : {
+		"bindbc-sdl"   : "~>1.4.2"
+	},
+	"versions"     : ["SDL_2_26"],
+	"dflags"       : [ "-mixin=mixins.d" ],
+}
