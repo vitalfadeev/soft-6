@@ -82,27 +82,32 @@ struct Init
         SDL_RenderDrawLine( renderer, x1, y2, x2, y1 ); // /
     }
 
+    static
     void on_SDL_MOUSEMOTION( O* o, D* d )
     {
         //
     }
 
+    static
     void on_XSDL_IN_MOUSE( O* o, D* d ) 
     { 
         //
     }
 
+    static
     void on_XSDL_OVER_MOUSE( O* o, D* d )
     { 
         //
     }
 
+    static
     void on_XSDL_OUT_MOUSE( O* o, D* d )
     { 
         //
     }
 
     //
+    static
     void on_XSDL_SLOW( O* o, D* d )
     {
         // to slowTo
