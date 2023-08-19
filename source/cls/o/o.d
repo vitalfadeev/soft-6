@@ -4,8 +4,7 @@ import std.stdio;
 import bindbc.sdl;
 import cls.o.inits;
 import types;
-import wrappers;
-import colors : Pal, SetRenderDrawColorStruct;
+import colors;
 
 alias SENSOR  = void function( O* o, D* dar );
 alias DRAW    = void function( O* o, Renderer* renderer, GridRect* drawRect );
@@ -22,6 +21,12 @@ alias ARRANGE = void function( O* o, Ars * );
 //     call [rax]             // call func
 
 struct FN(string FNAME,TFN)
+    if ( is( TFN == SENSOR ) ||
+         is( TFN == DRAW ) ||
+         is( TFN == SAVE ) ||
+         is( TFN == LOAD ) ||
+         is( TFN == ARRANGE )
+    )
 {
     TFN fn;
 
@@ -80,9 +85,10 @@ struct O
         GridRect           rect;
         GridPoint          point;
     }
-    Coord gridsize = 48;
-    Color fg       = Color(  199, 199,  199, SDL_ALPHA_OPAQUE );
-    Color bg       = Color(  0, 0,  0, SDL_ALPHA_OPAQUE );
+    Coord     gridsize = 48;
+    Color     fg       = Color(  199, 199,  199, SDL_ALPHA_OPAQUE );
+    Color     bg       = Color(  0, 0,  0, SDL_ALPHA_OPAQUE );
+    //
     bool      hoverable;
     bool      selectable;
     // Drag
@@ -122,11 +128,11 @@ struct O
 
     void recursive(alias FUNC,ARGS...)( ARGS args )
         if ( 
-            is(typeof(FUNC) == typeof(wrappers.Sensor)) || 
-            is(typeof(FUNC) == typeof(wrappers.Draw)) || 
-            is(typeof(FUNC) == typeof(wrappers.Save)) ||
-            is(typeof(FUNC) == typeof(wrappers.Load)) ||
-            is(typeof(FUNC) == typeof(wrappers.Arrange))
+            __traits(isSame, FUNC, .Sensor) || 
+            __traits(isSame, FUNC, .Draw) || 
+            __traits(isSame, FUNC, .Save) ||
+            __traits(isSame, FUNC, .Load) ||
+            __traits(isSame, FUNC, .Arrange)
         )
     {
         foreach( e; this )
@@ -165,7 +171,7 @@ struct O
                 return result;
         }
         return 0;
-    }    
+    }
 }
 
 
@@ -173,14 +179,14 @@ void Send( O* o, XSDL_TYPE xsdl )
 {
     D d;
     d.type = cast(SDL_EventType)xsdl;
-    wrappers.Sensor( o, &d );
+    Sensor( o, &d );
 }
 void Send( O* o, XSDL_TYPE xsdl, void* a1 )
 {
     D d;
     d.type = cast(SDL_EventType)xsdl;
     d.user.data1 = a1;
-    wrappers.Sensor( o, &d );
+    Sensor( o, &d );
 }
 void Send( O* o, XSDL_TYPE xsdl, void* a1, void* a2 )
 {
@@ -188,7 +194,7 @@ void Send( O* o, XSDL_TYPE xsdl, void* a1, void* a2 )
     d.type = cast(SDL_EventType)xsdl;
     d.user.data1 = a1;
     d.user.data2 = a2;
-    wrappers.Sensor( o, &d );
+    Sensor( o, &d );
 }
 
 
@@ -263,7 +269,6 @@ mixin template OMixin(TSUP=O,T_INIT_STATE=void)
 mixin template OSensorMixin()
 {
     import types;
-    import wrappers;
 
     alias THIS = typeof(this);
 
@@ -274,7 +279,7 @@ mixin template OSensorMixin()
         Sense!THIS( o, d );
 
         // recursive
-        o.recursive!(wrappers.Sensor)( d );
+        o.recursive!(.Sensor)( d );
     }
 }
 
@@ -330,6 +335,7 @@ void Go(T)( O* o, D* d )
 // Go!Init
 static
 void Go(alias T)( O* o )
+    if (__traits(hasMember, T, "_state"))
 {
     import std.traits;
     import std.string;
@@ -366,8 +372,6 @@ mixin template StateMixin()
 
 mixin template StateSensorMixin(T)
 {
-    import wrappers;
-
     static
     void Sensor( O* o, D* d )
     {
@@ -375,7 +379,7 @@ mixin template StateSensorMixin(T)
         Go!T( o, d );
 
         // recursive
-        o.recursive!(wrappers.Sensor)( d );
+        o.recursive!(.Sensor)( d );
     }
 }
 
@@ -454,7 +458,7 @@ void OSensor( O* o, D* d )
     Sense!O( o, d );
 
     // recursive
-    o.recursive!(wrappers.Sensor)( d );
+    o.recursive!(.Sensor)( d );
 }
 
 
@@ -466,7 +470,7 @@ void ODraw( O* o, Renderer* renderer, GridRect* drawRect )
     _DrawLines( o, renderer );
 
     // recursive
-    o.recursive!(wrappers.Draw)( renderer, drawRect );
+    o.recursive!(.Draw)( renderer, drawRect );
 }
 
 static
@@ -562,7 +566,7 @@ void _DrawLines( O* o, Renderer* renderer )
 //   S struct
 void OSave(T)( T* o, size_t level, ubyte[]* result )
 {
-    (*result) ~= Serialize( o );
+    (*result) ~= Serialize!T( o );
 }
 
 ubyte[] Serialize(T)(T a)
@@ -704,7 +708,7 @@ ubyte[] Serialize(T)(T* o)
     // recursive
     size_t level; 
     ubyte[] result;
-    o.recursive!(wrappers.Save)( level+1, &result );
+    o.recursive!(.Save)( level+1, &result );
     bytes ~= result;
     
     // ret
@@ -755,7 +759,7 @@ void ArrangeEo( O* o )
     ar.rect.y = o.rect.y;
     ar.rect.h = o.rect.h;
 
-    o.recursive!(wrappers.Arrange)( &ar );
+    o.recursive!(.Arrange)( &ar );
 }
 
 GridPoint Arrangator1( Ars* ar, Align ali, GridRect* r )
@@ -781,6 +785,32 @@ GridPoint Arrangator1( Ars* ar, Align ali, GridRect* r )
 void DoSlow( O* o )
 {
     //
+}
+
+// wrappers
+void Sensor( O* o, D* d )
+{
+    o._state.funcs.Sensor( o, d );
+}
+
+void Draw( O* o, Renderer* renderer, GridRect* drawRect )
+{
+    o._state.funcs.Draw( o, renderer, drawRect );
+}
+
+void Load( O* o )
+{
+    o._state.funcs.Load( o );
+}
+
+void Save( O* o, size_t level, ubyte[]* result )
+{
+    o._state.funcs.Save( o, level, result );
+}
+
+void Arrange( O* o, Ars* ar )
+{
+    o._state.funcs.Arrange( o, ar );
 }
 
 

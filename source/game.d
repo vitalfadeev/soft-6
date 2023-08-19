@@ -27,16 +27,12 @@ struct Game
         this.mao      = mao;
         this.view     = new View( &this );
         this.mainLoop = new MainLoop( &this );
-        //writeln( mao.typeInfo.name );
-        //writeln( mao.typeInfo.tsize );
-        //writeln( mao.typeInfo.toString() );
-        //writeln( mao.typeInfo.factory( mao.typeInfo.toString() ) );
     }
 
     void Go()
     {
-        wrappers.Load( this.mao ); // wrappers.Load
-        XSave( this.mao );
+        this.mao.Load(); // wrappers.Load
+        this.mao.XSave(); // wrappers.XSave
         this.view.Draw();
         this.mainLoop.Go();
        // on QUIT

@@ -4,9 +4,8 @@ import std.stdio;
 import bindbc.sdl;
 import cls.o;
 import cls.chip;
-import colors : Pal, SetRenderDrawColorStruct;
+import colors;
 import types;
-import wrappers;
 
 
 struct Chips
@@ -17,10 +16,6 @@ struct Chips
     mixin OMixin!O;
 
     string fileName = "xxx.sav";
-
-    // Sensor = auto-generated
-    // Load   = &Init.Load
-    //mixin StateMixin;
 
     static
     void Load( O* o )
@@ -66,4 +61,3 @@ struct Chips
         o.Add( cast(O*)spiro );
     }
 }
-

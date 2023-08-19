@@ -24,7 +24,7 @@ void SendDrop( O* o )
 void XSave(T : O)( T* o )
 {
     ubyte[] result;
-    wrappers.Save( cast(O*)o, 1, &result );
+    Save( cast(O*)o, 1, &result );
     import std.file;
     write( "xxx.sav", result );
 }
@@ -44,27 +44,3 @@ void XLoad()
     }
 }
 
-void Sensor( O* o, D* d )
-{
-    o._state.funcs.Sensor( o, d );
-}
-
-void Draw( O* o, Renderer* renderer, GridRect* drawRect )
-{
-    o._state.funcs.Draw( o, renderer, drawRect );
-}
-
-void Load( O* o )
-{
-    o._state.funcs.Load( o );
-}
-
-void Save( O* o, size_t level, ubyte[]* result )
-{
-    o._state.funcs.Save( o, level, result );
-}
-
-void Arrange( O* o, Ars* ar )
-{
-    o._state.funcs.Arrange( o, ar );
-}

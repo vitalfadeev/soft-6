@@ -10,7 +10,6 @@ import bindbc.sdl;
 import game;
 import cls.o;
 import types;
-import wrappers;
 
 
 struct MainLoop
@@ -64,7 +63,7 @@ struct MainLoop
     {
         if ( d.type == SDL_QUIT ) return onQuit( d );
         else
-            wrappers.Sensor( game.mao, d );
+            Sensor( game.mao, d );
     }
 
 

@@ -18,7 +18,7 @@ struct Spiro
         _DrawSpiro( o, renderer );
 
         // recursive
-        o.recursive!(wrappers.Draw)( renderer, drawRect );
+        o.recursive!(cls.o.Draw)( renderer, drawRect );
     }
 
 

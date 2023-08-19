@@ -420,7 +420,7 @@ a == b
 // expansion at
 .object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
 
-// expansion at source\cls\o\o.d(294,31)
+// expansion at source\cls\o\o.d(299,31)
 SDL_MOUSEMOTION
 
 // expansion at
@@ -441,34 +441,34 @@ SDL_MOUSEMOTION
 // expansion at
 .object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
 
-// expansion at source\cls\o\o.d(828,25)
+// expansion at source\cls\o\o.d(858,25)
 cls.o.o
 
-// expansion at source\cls\o\o.d(829,26)
+// expansion at source\cls\o\o.d(859,26)
 Init
 
-// expansion at source\cls\o\o.d(828,25)
+// expansion at source\cls\o\o.d(858,25)
 cls.o.o
 
-// expansion at source\cls\o\o.d(828,25)
+// expansion at source\cls\o\o.d(858,25)
 cls.o.o
 
-// expansion at source\cls\o\o.d(828,25)
+// expansion at source\cls\o\o.d(858,25)
 cls.o.o
 
-// expansion at source\cls\o\o.d(828,25)
+// expansion at source\cls\o\o.d(858,25)
 cls.o.o
 
-// expansion at source\cls\o\o.d(828,25)
+// expansion at source\cls\o\o.d(858,25)
 cls.o.o
 
-// expansion at source\cls\o\o.d(828,25)
+// expansion at source\cls\o\o.d(858,25)
 cls.o.o
 
-// expansion at source\cls\o\o.d(828,25)
+// expansion at source\cls\o\o.d(858,25)
 cls.o.o
 
-// expansion at source\cls\o\o.d(828,25)
+// expansion at source\cls\o\o.d(858,25)
 cls.o.o
 
 // expansion at source\cls\package.d(65,31)
