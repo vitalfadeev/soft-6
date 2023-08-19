@@ -27,7 +27,6 @@ struct FN(string FNAME,TFN)
 
     void opCall(ARGS...)( O* o, ARGS args )
     {
-        // class.fn()
         if ( fn !is null )
             fn( o, args );
     }
@@ -121,11 +120,6 @@ struct O
         o.r = null;
     }
 
-    void recursive( D* d )
-    {
-        recursive!(wrappers.Sensor)( d );
-    }
-
     void recursive(alias FUNC,ARGS...)( ARGS args )
         if ( 
             is(typeof(FUNC) == typeof(wrappers.Sensor)) || 
@@ -198,73 +192,6 @@ void Send( O* o, XSDL_TYPE xsdl, void* a1, void* a2 )
 }
 
 
-void Arrange( O* o )
-{
-    Ars ar;
-    ar.rect = o.rect;
-    ar.arrangator = &Arrangator1;
-    OArrange( o, &ar );
-}
-
-void OArrange( O* o, Ars* ar )
-{
-    const ali = Align.Middle;
-
-    o.point = ar.arrangator( ar, ali, &o.rect );
-
-    // recursive
-    ArrangeEo( o );
-}
-
-
-void ArrangeEo( O* o )
-{
-    import std.range;
-    if ( o.leo is null )
-        return;
-
-    Ars ar;
-    ar.arrangator = &Arrangator1;
- 
-    GridCoord totalw;
-    foreach( e; *o )
-        totalw += e.w;
- 
-    ar.totalw = totalw;
- 
-    ar.rect.x = o.rect.x + (o.rect.w - totalw)/2;
-    ar.rect.w = o.rect.w - totalw;
-    ar.rect.y = o.rect.y;
-    ar.rect.h = o.rect.h;
-
-    o.recursive!(wrappers.Arrange)( &ar );
-}
-
-GridPoint Arrangator1( Ars* ar, Align ali, GridRect* r )
-{
-    if ( ali == Align.Left )
-    {
-        auto p = GridPoint( ar.rect.x, ar.rect.y );
-        ar.rect.x = p.x + r.w;
-        return p;
-    }
-    else
-    if ( ali == Align.Middle )
-    {
-        auto p = GridPoint( ar.rect.x, ar.rect.y );
-        ar.rect.x = p.x + r.w;
-        return p;
-    }
-    
-    return GridPoint( 0, 0 );
-}
-
-
-void DoSlow( O* o )
-{
-    //
-}
-
 // struct Chip
 //   O _super;
 //   alias _super this;
@@ -316,13 +243,142 @@ mixin template OMixin(TSUP=O,T_INIT_STATE=void)
             },
             type: TYPE                                  // TypeInfo_Struct
         },
-        type : typeid(THIS)
+        type : typeid(THIS)                             // TypeInfo_Struct
     };
     alias _super this;
 
     //
     mixin OSensorMixin!();
 }
+
+// O
+//   Sensor
+//   state
+//
+// State
+//   Sensor
+//
+// ChipO
+//   Sensor
+mixin template OSensorMixin()
+{
+    import types;
+    import wrappers;
+
+    alias THIS = typeof(this);
+
+    
+    static
+    void Sensor( O* o, D* d )
+    {
+        Sense!THIS( o, d );
+
+        // recursive
+        o.recursive!(wrappers.Sensor)( d );
+    }
+}
+
+
+//pragma( inline, true )
+void Sense(T)( O* o, D* d )
+{
+    import std.traits;
+    import std.string;
+    import std.format;
+
+    // SDL
+    static foreach( m; __traits( allMembers, T ) )
+        static if ( __traits(isStaticFunction, __traits(getMember, T, m)) ) 
+            static if ( m.startsWith( "on_SDL_" ) )
+            {
+                if (d.type == mixin(m[3..$])) 
+                { 
+                    __traits(getMember, T, m)( o, d ); 
+                    return; 
+                }
+            }
+
+    // XSDL
+    static foreach( m; __traits( allMembers, T ) )
+        static if ( __traits(isStaticFunction, __traits(getMember, T, m)) ) 
+            static if ( m.startsWith( "on_XSDL_" ) )
+            {
+                if (d.type == mixin(m[3..$]))
+                { 
+                    __traits(getMember, T, m)( o, d ); 
+                    return; 
+                }
+            }
+}
+
+
+// Try
+//   go_Init()
+//   go_Hover()
+//pragma( inline, true )
+void Go(T)( O* o, D* d )
+{
+    import std.string;
+
+    static foreach( m; __traits( allMembers, T ) )
+        static if ( __traits(isStaticFunction, __traits(getMember, T, m)) ) 
+            static if ( m.startsWith( "go_" ) )
+                __traits(getMember, T, m)( o, d );
+}
+
+// Go!Hover
+// Go!Init
+static
+void Go(alias T)( O* o )
+{
+    import std.traits;
+    import std.string;
+    import std.format;
+    import std.conv;
+    writeln( (o._state.type.to!string).rightJustify( 30, ' ' ), " -> ", T.stringof );
+
+    // State
+    //   funcs
+    //   type
+    o._state = T.init._state;
+}
+
+
+mixin template StateMixin()
+{
+    import types;
+
+    alias THIS = typeof(this); // Init, Hover
+    
+    State _state = {                                      // State
+        funcs : {                                         // Funcs
+            Sensor : { IFFN!(THIS,THIS,void,"Sensor" ) }, // FN
+            Draw   : { IFFN!(THIS,THIS,void,"Draw"   ) }, // FN
+            Load   : { IFFN!(THIS,THIS,void,"Load"   ) }, // FN
+            Save   : { IFFN!(THIS,THIS,void,"Save"   ) }, // FN
+            Arrange: { IFFN!(THIS,THIS,void,"Arrange") }, // FN
+        },
+        type : typeid(THIS)                               // TypeInfo_Struct
+    };
+
+    mixin StateSensorMixin!(THIS);
+}
+
+mixin template StateSensorMixin(T)
+{
+    import wrappers;
+
+    static
+    void Sensor( O* o, D* d )
+    {
+        Sense!T( o, d );
+        Go!T( o, d );
+
+        // recursive
+        o.recursive!(wrappers.Sensor)( d );
+    }
+}
+
 
 template RJString( string S )
 {
@@ -398,7 +454,7 @@ void OSensor( O* o, D* d )
     Sense!O( o, d );
 
     // recursive
-    o.recursive( d );
+    o.recursive!(wrappers.Sensor)( d );
 }
 
 
@@ -479,27 +535,31 @@ void _DrawLines( O* o, Renderer* renderer )
 
 
 // Save
-// O code class.name
-// O code class.name
-// O code class.name
-// A code attr.name
-// A code attr.name
-// A code attr.name
-// S code state.name
-// S code state.name
-// S code state.name
-//
-// o code 
-//   s state
-//   a code value
-//   a code value
-//   a code value
-//   o code state
-//     a code value
-//     a code value
-//     a code value
+// o code s state
+//   a code type value
+//   a code type value
+//   a code type value
+//   o code s state
+//     a code type value
+//     a code type value
+//     a code type value
 //   r
 // r
+//
+// type
+//   t bool
+//   b byte
+//   B ubyte
+//   h short
+//   H ushort
+//   i int
+//   I uint
+//   l intlong
+//   L ulong
+//   f float
+//   d double
+//   s string
+//   S struct
 void OSave(T)( T* o, size_t level, ubyte[]* result )
 {
     (*result) ~= Serialize( o );
@@ -628,6 +688,7 @@ ubyte[] Serialize(T)(T* o)
             (m != "clickRel") &&
             (m != "_state") &&
             (m != "type") &&
+            (m != "recursive") &&
             //(m != "_super") &&
             (!isSomeFunction!(__traits(getMember, T, m) ) ) 
         )
@@ -652,150 +713,74 @@ ubyte[] Serialize(T)(T* o)
     return bytes;
 }
 
-// struct T
-//   a name type value
-//   a name type value
-//   a name type value
+
 //
-// t bool
-// b byte
-// B ubyte
-// h short
-// H ushort
-// i int
-// I uint
-// l intlong
-// L ulong
-// f float
-// d double
-// s string
-// S struct
-
-
-//pragma( inline, true )
-void Sense(T)( O* o, D* d )
+void OArrange( O* o, Ars* ar )
 {
-    import std.traits;
-    import std.string;
-    import std.format;
+    const ali = Align.Middle;
 
-    // SDL
-    static foreach( m; __traits( allMembers, T ) )
-        static if ( __traits(isStaticFunction, __traits(getMember, T, m)) ) 
-            static if ( m.startsWith( "on_SDL_" ) )
-            {
-                if (d.type == mixin(m[3..$])) 
-                { 
-                    __traits(getMember, T, m)( o, d ); 
-                    return; 
-                }
-            }
+    o.point = ar.arrangator( ar, ali, &o.rect );
 
-    // XSDL
-    static foreach( m; __traits( allMembers, T ) )
-        static if ( __traits(isStaticFunction, __traits(getMember, T, m)) ) 
-            static if ( m.startsWith( "on_XSDL_" ) )
-            {
-                if (d.type == mixin(m[3..$]))
-                { 
-                    __traits(getMember, T, m)( o, d ); 
-                    return; 
-                }
-            }
+    // recursive
+    ArrangeEo( o );
 }
 
 
-auto StateID(T)()
+void Arrange( O* o )
 {
-    return T.stringof; 
+    Ars ar;
+    ar.rect = o.rect;
+    ar.arrangator = &Arrangator1;
+    OArrange( o, &ar );
 }
 
-//
-//pragma( inline, true )
-void Go(T)( O* o, D* d )
-{
-    import std.string;
 
-    static foreach( m; __traits( allMembers, T ) )
-        static if ( __traits(isStaticFunction, __traits(getMember, T, m)) ) 
-            static if ( m.startsWith( "go_" ) )
-                __traits(getMember, T, m)( o, d );
+void ArrangeEo( O* o )
+{
+    import std.range;
+    if ( o.leo is null )
+        return;
+
+    Ars ar;
+    ar.arrangator = &Arrangator1;
+ 
+    GridCoord totalw;
+    foreach( e; *o )
+        totalw += e.w;
+ 
+    ar.totalw = totalw;
+ 
+    ar.rect.x = o.rect.x + (o.rect.w - totalw)/2;
+    ar.rect.w = o.rect.w - totalw;
+    ar.rect.y = o.rect.y;
+    ar.rect.h = o.rect.h;
+
+    o.recursive!(wrappers.Arrange)( &ar );
 }
 
-// O
-//   Sensor
-//   state
-//
-// State
-//   Sensor
-//
-// ChipO
-//   Sensor
-mixin template OSensorMixin()
+GridPoint Arrangator1( Ars* ar, Align ali, GridRect* r )
 {
-    import types;
-
-    alias THIS = typeof(this);
-
-    
-    static
-    void Sensor( O* o, D* d )
+    if ( ali == Align.Left )
     {
-        Sense!THIS( o, d );
-
-        // recursive
-        o.recursive( d );
+        auto p = GridPoint( ar.rect.x, ar.rect.y );
+        ar.rect.x = p.x + r.w;
+        return p;
     }
-}
-
-mixin template StateSensorMixin(T)
-{
-    static
-    void Sensor( O* o, D* d )
+    else
+    if ( ali == Align.Middle )
     {
-        Sense!T( o, d );
-        Go!T( o, d );
-
-        // recursive
-        o.recursive( d );
+        auto p = GridPoint( ar.rect.x, ar.rect.y );
+        ar.rect.x = p.x + r.w;
+        return p;
     }
-}
-
-mixin template StateMixin()
-{
-    import types;
-
-    alias THIS = typeof(this); // Init, Hover
     
-    State _state = {                                      // State
-        funcs : {                                         // Funcs
-            Sensor : { IFFN!(THIS,THIS,void,"Sensor" ) }, // FN
-            Draw   : { IFFN!(THIS,THIS,void,"Draw"   ) }, // FN
-            Load   : { IFFN!(THIS,THIS,void,"Load"   ) }, // FN
-            Save   : { IFFN!(THIS,THIS,void,"Save"   ) }, // FN
-            Arrange: { IFFN!(THIS,THIS,void,"Arrange") }, // FN
-        },
-        type : typeid(THIS)                               // TypeInfo_Struct
-    };
-
-    mixin StateSensorMixin!(THIS);
+    return GridPoint( 0, 0 );
 }
 
-//Go!Hovers
-//Go!Inits
-static
-void Go(alias T)( O* o )
-{
-    import std.traits;
-    import std.string;
-    import std.format;
-    import std.conv;
-    writeln( (o._state.type.to!string).rightJustify( 30, ' ' ), " -> ", T.stringof );
 
-    // State
-    //   funcs
-    //   type
-    o._state = T.init._state;
+void DoSlow( O* o )
+{
+    //
 }
 
 
@@ -820,8 +805,9 @@ struct Ways
     bool[5] Drop        = [   0,     0,           0,    0,    0 ];
 }
 
-// Generator!Ways
-void Generator(T)()
+// Check!Ways
+void Check(T)()
+    if ( is( T == struct ) )
 {
     import std.string;
     import std.format;
@@ -874,7 +860,7 @@ struct %s
 static
 this()
 {
-    Generator!Ways();
+    Check!Ways();
 }
 
 // Sensor( o, d )
