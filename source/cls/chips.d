@@ -4,7 +4,7 @@ import std.stdio;
 import bindbc.sdl;
 import cls.o;
 import cls.chip;
-import colors : Pal, SDL_SetRenderDrawColorStruct;
+import colors : Pal, SetRenderDrawColorStruct;
 import types;
 import wrappers;
 

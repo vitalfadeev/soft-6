@@ -3,7 +3,7 @@ module cls.o.hoverselects;
 import std.stdio;
 import bindbc.sdl;
 import cls.o;
-import colors : Pal, SDL_SetRenderDrawColorStruct;
+import colors : Pal, SetRenderDrawColorStruct;
 import cls.o.inits;
 import types;
 import wrappers;
@@ -14,11 +14,11 @@ struct Hoverselect
     mixin StateMixin;
 
 
-    SDL_Color bg = Pal.Hovered;
-    SDL_Color fg = Pal.Selected;
+    Color bg = Pal.Hovered;
+    Color fg = Pal.Selected;
 
     static
-    void Draw( O* o, SDL_Renderer* renderer, GridRect* drawRect )
+    void Draw( O* o, Renderer* renderer, GridRect* drawRect )
     {
         Hover._DrawBackground( o, renderer );
         Init._DrawGrid( o, renderer );
@@ -42,7 +42,7 @@ struct Hoverselect
         auto x2 = (x+w) * gridsize;
         auto y2 = (y+h) * gridsize;
 
-        SDL_SetRenderDrawColorStruct( renderer, Pal.Selected );
+        SetRenderDrawColorStruct( renderer, Pal.Selected );
         SDL_RenderDrawLine( renderer, x1, y1, x2, y2 ); // \
         SDL_RenderDrawLine( renderer, x1, y2, x2, y1 ); // /
     }

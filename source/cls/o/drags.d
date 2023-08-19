@@ -3,7 +3,7 @@ module cls.o.drags;
 import std.stdio;
 import bindbc.sdl;
 import cls.o;
-import colors : Pal, SDL_SetRenderDrawColorStruct;
+import colors : Pal, SetRenderDrawColorStruct;
 import cls.o.inits;
 import cls.o.hovers;
 import types;
@@ -15,12 +15,12 @@ struct Drag
     mixin StateMixin;
     
 
-    SDL_Color fg = Pal.Drag;
-    SDL_Color bg = Pal.Black;
+    Color fg = Pal.Drag;
+    Color bg = Pal.Black;
 
 
     static
-    void Draw( O* o, SDL_Renderer* renderer, GridRect* drawRect )
+    void Draw( O* o, Renderer* renderer, GridRect* drawRect )
     {
         Init._DrawBackground( o, renderer );
         Init._DrawGrid( o, renderer );
@@ -45,7 +45,7 @@ struct Drag
         auto x2 = (x+w) * gridsize;
         auto y2 = (y+h) * gridsize;
 
-        SDL_SetRenderDrawColorStruct( renderer, Pal.Drag );
+        SetRenderDrawColorStruct( renderer, Pal.Drag );
         SDL_RenderDrawLine( renderer, x1, y1, x2, y2 ); // \
         SDL_RenderDrawLine( renderer, x1, y2, x2, y1 ); // /
     }

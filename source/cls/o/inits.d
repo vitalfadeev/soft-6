@@ -4,7 +4,7 @@ import std.stdio;
 import bindbc.sdl;
 import cls.o;
 import cls.o.hovers;
-import colors : Pal, SDL_SetRenderDrawColorStruct;
+import colors : Pal, SetRenderDrawColorStruct;
 import types;
 import wrappers;
 
@@ -13,14 +13,14 @@ struct Init
 {
     mixin StateMixin;
 
-    SDL_Color bg = Pal.Black;
-    SDL_Color fg = Pal.Normal;
+    Color bg = Pal.Black;
+    Color fg = Pal.Normal;
 
     enum Arrange = &OArrange;
     enum Save = &OSave!O;
 
     static
-    void Draw( O* o, SDL_Renderer* renderer, GridRect* drawRect )
+    void Draw( O* o, Renderer* renderer, GridRect* drawRect )
     {
         _DrawBackground( o, renderer );
         _DrawGrid( o, renderer );
@@ -40,7 +40,7 @@ struct Init
         auto h = o.h;
 
         SDL_Rect _rect = { x*gridsize, y*gridsize, w*gridsize, h*gridsize };
-        SDL_SetRenderDrawColorStruct( renderer, o.bg );
+        SetRenderDrawColorStruct( renderer, o.bg );
         SDL_RenderFillRect( renderer, &_rect );
     }
 
@@ -77,7 +77,7 @@ struct Init
         auto x2 = (x+w) * gridsize;
         auto y2 = (y+h) * gridsize;
 
-        SDL_SetRenderDrawColorStruct( renderer, o.fg );
+        SetRenderDrawColorStruct( renderer, o.fg );
         SDL_RenderDrawLine( renderer, x1, y1, x2, y2 ); // \
         SDL_RenderDrawLine( renderer, x1, y2, x2, y1 ); // /
     }

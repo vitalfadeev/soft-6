@@ -15,9 +15,9 @@ import wrappers;
 
 struct View
 {
-    Game*         game;
-    SDL_Window*   window;
-    SDL_Renderer* renderer;
+    Game*     game;
+    Window*   window;
+    Renderer* renderer;
 
     this( Game* game )
     {

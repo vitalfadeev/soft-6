@@ -2,7 +2,7 @@ module cls.o.hovers;
 
 import bindbc.sdl;
 import cls.o;
-import colors : Pal, SDL_SetRenderDrawColorStruct;
+import colors : Pal, SetRenderDrawColorStruct;
 import cls.o.inits;
 import types;
 import wrappers;
@@ -12,12 +12,12 @@ struct Hover
 {
     mixin StateMixin;
     
-    SDL_Color bg = Pal.Hovered;
-    SDL_Color fg = Pal.Normal;
+    Color bg = Pal.Hovered;
+    Color fg = Pal.Normal;
 
 
     static
-    void Draw( O* o, SDL_Renderer* renderer, GridRect* drawRect )
+    void Draw( O* o, Renderer* renderer, GridRect* drawRect )
     {
         _DrawBackground( o, renderer );
         Init._DrawGrid( o, renderer );
@@ -37,7 +37,7 @@ struct Hover
         auto h = o.h;
 
         SDL_Rect _rect = { x*gridsize, y*gridsize, w*gridsize, h*gridsize };
-        SDL_SetRenderDrawColorStruct( renderer, Pal.Hovered );
+        SetRenderDrawColorStruct( renderer, Pal.Hovered );
         SDL_RenderFillRect( renderer, &_rect );
     }
 

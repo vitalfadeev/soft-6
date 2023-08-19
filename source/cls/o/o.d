@@ -5,10 +5,10 @@ import bindbc.sdl;
 import cls.o.inits;
 import types;
 import wrappers;
-import colors : Pal, SDL_SetRenderDrawColorStruct;
+import colors : Pal, SetRenderDrawColorStruct;
 
 alias SENSOR  = void function( O* o, D* dar );
-alias DRAW    = void function( O* o, SDL_Renderer* renderer, GridRect* drawRect );
+alias DRAW    = void function( O* o, Renderer* renderer, GridRect* drawRect );
 alias SAVE    = void function( O* o, size_t level, ubyte[]* result );
 alias LOAD    = void function( O* o );
 alias ARRANGE = void function( O* o, Ars * );
@@ -80,9 +80,9 @@ struct O
         GridRect           rect;
         GridPoint          point;
     }
-    Coord     gridsize = 48;
-    SDL_Color fg       = SDL_Color(  199, 199,  199, SDL_ALPHA_OPAQUE );
-    SDL_Color bg       = SDL_Color(  0, 0,  0, SDL_ALPHA_OPAQUE );
+    Coord gridsize = 48;
+    Color fg       = Color(  199, 199,  199, SDL_ALPHA_OPAQUE );
+    Color bg       = Color(  0, 0,  0, SDL_ALPHA_OPAQUE );
     bool      hoverable;
     bool      selectable;
     // Drag
@@ -459,7 +459,7 @@ void OSensor( O* o, D* d )
 
 
 static
-void ODraw( O* o, SDL_Renderer* renderer, GridRect* drawRect )
+void ODraw( O* o, Renderer* renderer, GridRect* drawRect )
 {
     _DrawBackground( o, renderer );
     _DrawGrid( o, renderer );
@@ -479,7 +479,7 @@ void _DrawBackground( O* o, Renderer* renderer )
     auto h = o.h;
 
     SDL_Rect _rect = { x*gridsize, y*gridsize, w*gridsize, h*gridsize };
-    SDL_SetRenderDrawColorStruct( renderer, Pal.Black );
+    SetRenderDrawColorStruct( renderer, Pal.Black );
     SDL_RenderFillRect( renderer, &_rect );
 }
 
@@ -516,7 +516,7 @@ void _DrawLines( O* o, Renderer* renderer )
     auto x2 = (x+w) * gridsize;
     auto y2 = (y+h) * gridsize;
 
-    SDL_SetRenderDrawColorStruct( renderer, Pal.Normal );
+    SetRenderDrawColorStruct( renderer, Pal.Normal );
     SDL_RenderDrawLine( renderer, x1, y1, x2, y2 ); // \
     SDL_RenderDrawLine( renderer, x1, y2, x2, y1 ); // /
 }

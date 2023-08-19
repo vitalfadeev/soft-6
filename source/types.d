@@ -9,19 +9,7 @@ alias m8   = ubyte;
 alias m8s  = ubyte[];
 alias m32  = uint;
 alias mptr = m*;
-alias Code = m8;
 alias Timestamp = ReturnType!SDL_GetTicks;
-const DA =  1;
-const DO =  0;
-const DU = -1;
-enum ChipState
-{
-    Normal,
-    Selected,
-    Hovered,
-    Drag,
-    Drop
-}
 
 alias PX        = typeof(SDL_Rect.x);
 alias Coord     = typeof(SDL_Rect.x);
@@ -29,8 +17,10 @@ alias GridCoord = typeof(SDL_Rect.x);
 alias Point     = SDL_Point;
 alias Rect      = SDL_Rect;
 alias Renderer  = SDL_Renderer;
+alias Window    = SDL_Window;
 alias D         = SDL_Event;
-alias Event     = SDL_Event;
+alias Color     = SDL_Color;
+
 
 
 struct GridPoint
@@ -89,17 +79,6 @@ bool RectInRect( GridRect* a, GridRect* b )
         return false;
 }
 
-//struct Renderer
-//{
-//    SDL_Renderer* renderer;
-//    alias renderer this;
- 
-//    auto SetDrawColor(R,G,B,A)( R r, G g, B b, A a )
-//    {
-//        return SDL_SetRendererDrawColor( renderer, r, g, b, a );
-//    }
-//}
-
 alias XSDL_TYPE = Uint32;
 XSDL_TYPE XSDL_IN_MOUSE;
 XSDL_TYPE XSDL_OUT_MOUSE;
@@ -107,10 +86,6 @@ XSDL_TYPE XSDL_OVER_MOUSE;
 XSDL_TYPE XSDL_DRAG;
 XSDL_TYPE XSDL_DROP;
 XSDL_TYPE XSDL_SLOW;
-//
-XSDL_TYPE XSDL_DRAWINRECT;
-XSDL_TYPE XSDL_DRAW;
-XSDL_TYPE XSDL_ARRANGE;
 
 string XSDL_toString( XSDL_TYPE a )
 {
@@ -123,35 +98,6 @@ string XSDL_toString( XSDL_TYPE a )
                 if ( a == __traits( getMember, types, m ) ) return m;
 
     return a.to!string;
-}
-
-enum OType
-{
-    O = 0x01,
-    CHIP,
-    CHIPPOUT,
-    CHIPS,
-}
-
-enum OState
-{
-    // O
-    O_INITS        = (OType.O << 8) + 0x01,
-    O_HOVERS,
-    O_HOVERSELECTS,
-    O_DRAGS,
-    // Chip
-    CHIP_INITS     = (OType.CHIP << 8) + 0x01,
-    // ChipPout
-    CHIPPOUT_INITS = (OType.CHIPPOUT << 8) + 0x01,
-    // Chips
-    CHIPS_INITS    = (OType.CHIPS << 8) + 0x01,
-}
-
-auto CallIfNotNull(alias FUNC,TO,TA)(TO o, TA a)
-{
-    if ( func !is null )
-        FUNC( o, a );
 }
 
 // arrange struct
