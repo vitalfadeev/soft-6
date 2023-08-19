@@ -52,7 +52,22 @@ struct State
     TypeInfo_Struct type;
 }
 
-//
+// O
+//   state
+//     funcs
+//       Sensor
+//       Draw
+//       Load
+//       Save
+//       Arrange
+//     type
+//   type
+//   ...
+//   x
+//   y
+//   w
+//   h
+//   ...
 struct O
 {
     State _state = {                // State
@@ -126,18 +141,6 @@ struct O
         o.r = null;
     }
 
-    void recursive(alias FUNC,ARGS...)( ARGS args )
-        if ( 
-            __traits(isSame, FUNC, .Sensor) || 
-            __traits(isSame, FUNC, .Draw) || 
-            __traits(isSame, FUNC, .Save) ||
-            __traits(isSame, FUNC, .Load) ||
-            __traits(isSame, FUNC, .Arrange)
-        )
-    {
-        foreach( e; this )
-            FUNC( e, args );
-    }
 
     bool Is( GridPoint p )
     {
@@ -175,42 +178,12 @@ struct O
 }
 
 
-void Send( O* o, XSDL_TYPE xsdl )
-{
-    D d;
-    d.type = cast(SDL_EventType)xsdl;
-    Sensor( o, &d );
-}
-void Send( O* o, XSDL_TYPE xsdl, void* a1 )
-{
-    D d;
-    d.type = cast(SDL_EventType)xsdl;
-    d.user.data1 = a1;
-    Sensor( o, &d );
-}
-void Send( O* o, XSDL_TYPE xsdl, void* a1, void* a2 )
-{
-    D d;
-    d.type = cast(SDL_EventType)xsdl;
-    d.user.data1 = a1;
-    d.user.data2 = a2;
-    Sensor( o, &d );
-}
-
 
 // struct Chip
 //   O _super;
 //   alias _super this;
 //
 //   void Sensor( o, d )
-//
-//   struct Init
-//     void Sensor( o, d )
-//     void Draw( o, d )
-//     
-//   struct Hover
-//     void Sensor( o, d )
-//     void Draw( o, d )
 mixin template OMixin(TSUP=O,T_INIT_STATE=void)
     if ( __traits(hasMember, T_INIT_STATE, "_state") || is(T_INIT_STATE == void) )
 {
@@ -259,13 +232,6 @@ mixin template OMixin(TSUP=O,T_INIT_STATE=void)
 
 // O
 //   Sensor
-//   state
-//
-// State
-//   Sensor
-//
-// ChipO
-//   Sensor
 mixin template OSensorMixin()
 {
     import types;
@@ -279,11 +245,14 @@ mixin template OSensorMixin()
         Sense!THIS( o, d );
 
         // recursive
-        o.recursive!(.Sensor)( d );
+        SensorRecursive( o, d );
     }
 }
 
 
+// switch..case
+//   if d.type == SDL_*   on_SDL_*;
+//   if d.type == XSDL_*  on_XSDL_*;
 //pragma( inline, true )
 void Sense(T)( O* o, D* d )
 {
@@ -379,7 +348,7 @@ mixin template StateSensorMixin(T)
         Go!T( o, d );
 
         // recursive
-        o.recursive!(.Sensor)( d );
+        SensorRecursive( o, d );
     }
 }
 
@@ -458,7 +427,7 @@ void OSensor( O* o, D* d )
     Sense!O( o, d );
 
     // recursive
-    o.recursive!(.Sensor)( d );
+    SensorRecursive( o, d );
 }
 
 
@@ -470,7 +439,7 @@ void ODraw( O* o, Renderer* renderer, GridRect* drawRect )
     _DrawLines( o, renderer );
 
     // recursive
-    o.recursive!(.Draw)( renderer, drawRect );
+    DrawRecursive( o, renderer, drawRect );
 }
 
 static
@@ -708,7 +677,7 @@ ubyte[] Serialize(T)(T* o)
     // recursive
     size_t level; 
     ubyte[] result;
-    o.recursive!(.Save)( level+1, &result );
+    SaveRecursive( o, level+1, &result );
     bytes ~= result;
     
     // ret
@@ -759,7 +728,7 @@ void ArrangeEo( O* o )
     ar.rect.y = o.rect.y;
     ar.rect.h = o.rect.h;
 
-    o.recursive!(.Arrange)( &ar );
+    ArrangeRecursive( o, &ar );
 }
 
 GridPoint Arrangator1( Ars* ar, Align ali, GridRect* r )
@@ -787,6 +756,7 @@ void DoSlow( O* o )
     //
 }
 
+
 // wrappers
 void Sensor( O* o, D* d )
 {
@@ -811,6 +781,61 @@ void Save( O* o, size_t level, ubyte[]* result )
 void Arrange( O* o, Ars* ar )
 {
     o._state.funcs.Arrange( o, ar );
+}
+
+// Recursive
+void SensorRecursive( O* o, D* d )
+{
+    foreach( e; *o )
+        .Sensor( e, d );
+}
+
+void DrawRecursive( O* o, Renderer* renderer, GridRect* drawRect )
+{
+    foreach( e; *o )
+        .Draw( e, renderer, drawRect );
+}
+
+void SaveRecursive( O* o, size_t level, ubyte[]* result )
+{
+    foreach( e; *o )
+        .Save( e, level, result );
+}
+
+void LoadRecursive( O* o )
+{
+    foreach( e; *o )
+        .Load( e );
+}
+
+void ArrangeRecursive( O* o, Ars* ar )
+{
+    foreach( e; *o )
+        .Arrange( e, ar );
+}
+
+
+// Send
+void Send( O* o, XSDL_TYPE xsdl )
+{
+    D d;
+    d.type = cast(SDL_EventType)xsdl;
+    .Sensor( o, &d );
+}
+void Send( O* o, XSDL_TYPE xsdl, void* a1 )
+{
+    D d;
+    d.type = cast(SDL_EventType)xsdl;
+    d.user.data1 = a1;
+    .Sensor( o, &d );
+}
+void Send( O* o, XSDL_TYPE xsdl, void* a1, void* a2 )
+{
+    D d;
+    d.type = cast(SDL_EventType)xsdl;
+    d.user.data1 = a1;
+    d.user.data2 = a2;
+    .Sensor( o, &d );
 }
 
 

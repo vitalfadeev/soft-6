@@ -27,7 +27,7 @@ struct Init
         _DrawLines( o, renderer );
 
         // recursive
-        o.recursive!(cls.o.Draw)( renderer, drawRect );
+        DrawRecursive( o, renderer, drawRect );
     }
 
     static
