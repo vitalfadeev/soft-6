@@ -420,7 +420,7 @@ a == b
 // expansion at
 .object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
 
-// expansion at source\cls\o\o.d(268,31)
+// expansion at source\cls\o\o.d(272,31)
 SDL_MOUSEMOTION
 
 // expansion at
@@ -432,19 +432,19 @@ SDL_MOUSEMOTION
 // expansion at
 .object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
 
-// expansion at source\cls\o\o.d(268,31)
+// expansion at source\cls\o\o.d(272,31)
 SDL_MOUSEMOTION
 
-// expansion at source\cls\o\o.d(280,31)
+// expansion at source\cls\o\o.d(284,31)
 XSDL_IN_MOUSE
 
-// expansion at source\cls\o\o.d(280,31)
+// expansion at source\cls\o\o.d(284,31)
 XSDL_OVER_MOUSE
 
-// expansion at source\cls\o\o.d(280,31)
+// expansion at source\cls\o\o.d(284,31)
 XSDL_OUT_MOUSE
 
-// expansion at source\cls\o\o.d(280,31)
+// expansion at source\cls\o\o.d(284,31)
 XSDL_SLOW
 
 // expansion at
@@ -456,34 +456,34 @@ XSDL_SLOW
 // expansion at
 .object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
 
-// expansion at source\cls\o\o.d(883,25)
+// expansion at source\cls\o\o.d(884,25)
 cls.o.o
 
-// expansion at source\cls\o\o.d(884,26)
+// expansion at source\cls\o\o.d(885,26)
 Init
 
-// expansion at source\cls\o\o.d(883,25)
+// expansion at source\cls\o\o.d(884,25)
 cls.o.o
 
-// expansion at source\cls\o\o.d(883,25)
+// expansion at source\cls\o\o.d(884,25)
 cls.o.o
 
-// expansion at source\cls\o\o.d(883,25)
+// expansion at source\cls\o\o.d(884,25)
 cls.o.o
 
-// expansion at source\cls\o\o.d(883,25)
+// expansion at source\cls\o\o.d(884,25)
 cls.o.o
 
-// expansion at source\cls\o\o.d(883,25)
+// expansion at source\cls\o\o.d(884,25)
 cls.o.o
 
-// expansion at source\cls\o\o.d(883,25)
+// expansion at source\cls\o\o.d(884,25)
 cls.o.o
 
-// expansion at source\cls\o\o.d(883,25)
+// expansion at source\cls\o\o.d(884,25)
 cls.o.o
 
-// expansion at source\cls\o\o.d(883,25)
+// expansion at source\cls\o\o.d(884,25)
 cls.o.o
 
 // expansion at source\cls\package.d(65,31)

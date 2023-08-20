@@ -85,11 +85,11 @@ struct O
 
     // DList
     // Inner content
-    O* leo;
-    O* reo;
+    O* leo; // left  eated o
+    O* reo; // right eated o
     // same level content
-    O* l;
-    O* r;
+    O* l;   // left  o
+    O* r;   // right o
 
     // Data
     m8 id;
@@ -111,37 +111,6 @@ struct O
     GridPoint clickRel;
 
     // Methods
-    void Add( O* o )
-    {
-        // no before
-        if ( leo is null )
-        {
-            leo = o;
-            reo = o;
-        }
-        else
-
-        // has before
-        {
-            reo.r = o;
-            o.l = reo;
-            reo = o;
-        }
-    }
-
-    void Del( O* o )
-    {
-        if ( o.l !is null )
-            o.l.r = o.r;
-
-        if ( o.r !is null )
-            o.r.l = o.l;
-
-        o.l = null;
-        o.r = null;
-    }
-
-
     bool Is( GridPoint p )
     {
         if ( PointInRect( &p, &rect ) )
@@ -178,6 +147,41 @@ struct O
 }
 
 
+void Eat( O* a, O* b )
+{
+    // no before
+    if ( a.leo is null )
+    {
+        a.leo = b;
+        a.reo = b;
+    }
+    else
+
+    // has before
+    {
+        a.reo.r = b;
+        b.l = a.reo;
+        a.reo = b;
+    }
+}
+
+void Out( O* a, O* b )
+{
+    if ( b.l !is null )
+        b.l.r = b.r;
+
+    if ( b.r !is null )
+        b.r.l = b.l;
+
+    if ( a.leo == b )
+        a.leo = b.r;
+
+    if ( a.reo == b )
+        a.reo = b.l;
+
+    b.l = null;
+    b.r = null;
+}
 
 // struct Chip
 //   O _super;
@@ -500,10 +504,7 @@ void _DrawLines( O* o, Renderer* renderer )
 //{
 //    import std.stdio;
 //    writeln( __FUNCTION__ );
-
-//    foreach( e; *o )
-//        if ( e.Load !is null )
-//            e.Load( e );
+//    LoadRecursive( o );
 //}
 
 

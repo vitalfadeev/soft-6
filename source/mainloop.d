@@ -63,7 +63,7 @@ struct MainLoop
     {
         if ( d.type == SDL_QUIT ) return onQuit( d );
         else
-            game.mao.Sensor( d );
+            .Sensor( game.mao, d );
     }
 
 

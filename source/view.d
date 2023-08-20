@@ -106,7 +106,7 @@ struct View
 
     void Draw()
     {
-        game.mao.Draw( renderer, &game.mao.rect ); // wrappers.Draw
+        .Draw( game.mao, renderer, &game.mao.rect ); // wrappers.Draw
         SDL_RenderPresent( renderer );
     }
 }

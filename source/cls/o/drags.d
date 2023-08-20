@@ -60,7 +60,7 @@ struct Drag
         {
             auto mousePoint = GridPoint( d.motion.x, d.motion.y, gridsize );
             o.point = mousePoint - o.clickRel;
-            Arrange( o );
+            .Arrange( o );
         }
     }
 
