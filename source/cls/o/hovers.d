@@ -2,7 +2,7 @@ module cls.o.hovers;
 
 import bindbc.sdl;
 import cls.o;
-import colors : Pal, SetRenderDrawColorStruct;
+import colors : Pal, SDL_SetRenderDrawColorStruct;
 import cls.o.inits;
 import types;
 import wrappers;
@@ -37,7 +37,7 @@ struct Hover
         auto h = o.h;
 
         SDL_Rect _rect = { x*gridsize, y*gridsize, w*gridsize, h*gridsize };
-        SetRenderDrawColorStruct( renderer, Pal.Hovered );
+        SDL_SetRenderDrawColorStruct( renderer, Pal.Hovered );
         SDL_RenderFillRect( renderer, &_rect );
     }
 

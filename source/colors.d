@@ -15,11 +15,11 @@ enum Pal : Color
     Drop =     Color( 199, 199,  99, SDL_ALPHA_OPAQUE ),
 };
 
-auto SetRenderDrawColorStruct(TR)( TR renderer, Pal color )
+auto SDL_SetRenderDrawColorStruct(TR)( TR renderer, Pal color )
 {
     SDL_SetRenderDrawColor( renderer, color.r, color.g, color.b, color.a );
 }
-auto SetRenderDrawColorStruct(TR)( TR renderer, Color color )
+auto SDL_SetRenderDrawColorStruct(TR)( TR renderer, Color color )
 {
     SDL_SetRenderDrawColor( renderer, color.r, color.g, color.b, color.a );
 }

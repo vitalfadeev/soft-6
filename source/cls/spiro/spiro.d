@@ -2,7 +2,7 @@ module cls.spiro.spiro;
 
 import bindbc.sdl;
 import cls.o;
-import colors : Pal, SetRenderDrawColorStruct;
+import colors : Pal, SDL_SetRenderDrawColorStruct;
 import types;
 import wrappers;
 
@@ -40,7 +40,7 @@ struct Spiro
         int cy = y1 + (y2-y1)/2;
         int r = 50;
 
-        SetRenderDrawColorStruct( renderer, o.fg );
+        SDL_SetRenderDrawColorStruct( renderer, o.fg );
         //Circle( renderer, cx, cy, r );
         DrawSpiro( renderer, cx, cy, r );
     }
@@ -91,6 +91,12 @@ void Drawpixel( Renderer* renderer, int x, int y )
 {
     SDL_RenderDrawPoint( renderer, x , y );
 }
+
+void Arc( Renderer* renderer, int cx, int cy, int x1, int y1, int x2, int y2 )
+{
+    //
+}
+
 
 void DrawSpiro( Renderer* renderer, int cx, int cy, int r )
 {

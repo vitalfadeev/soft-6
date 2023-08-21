@@ -456,7 +456,7 @@ void _DrawBackground( O* o, Renderer* renderer )
     auto h = o.h;
 
     SDL_Rect _rect = { x*gridsize, y*gridsize, w*gridsize, h*gridsize };
-    SetRenderDrawColorStruct( renderer, Pal.Black );
+    SDL_SetRenderDrawColorStruct( renderer, Pal.Black );
     SDL_RenderFillRect( renderer, &_rect );
 }
 
@@ -493,7 +493,7 @@ void _DrawLines( O* o, Renderer* renderer )
     auto x2 = (x+w) * gridsize;
     auto y2 = (y+h) * gridsize;
 
-    SetRenderDrawColorStruct( renderer, Pal.Normal );
+    SDL_SetRenderDrawColorStruct( renderer, Pal.Normal );
     SDL_RenderDrawLine( renderer, x1, y1, x2, y2 ); // \
     SDL_RenderDrawLine( renderer, x1, y2, x2, y1 ); // /
 }

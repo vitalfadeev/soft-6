@@ -4,6 +4,7 @@ import std : DList;
 import bindbc.sdl;
 import cls.o;
 import types;
+import geom;
 
 
 struct Drawer
@@ -25,10 +26,11 @@ void _DrawDops( Drawer* o, Renderer* renderer, GridRect* drawRect )
     {
         switch ( dop.type )
         {
-            case DTYPE.POINT : dop.p.Draw(  renderer, drawRect ); break;
-            case DTYPE.LINE  : dop.l.Draw(   renderer, drawRect ); break;
-            case DTYPE.RECT  : dop.r.Draw(   renderer, drawRect ); break;
+            case DTYPE.POINT : dop.p.Draw( renderer, drawRect ); break;
+            case DTYPE.LINE  : dop.l.Draw( renderer, drawRect ); break;
+            case DTYPE.RECT  : dop.r.Draw( renderer, drawRect ); break;
             case DTYPE.CIRCLE: dop.c.Draw( renderer, drawRect ); break;
+            case DTYPE.ARC   : dop.a.Draw( renderer, drawRect ); break;
             default: 
         }
     }
@@ -41,6 +43,7 @@ enum DTYPE
     LINE,
     RECT,
     CIRCLE,
+    ARC,
 }
 
 union DrawOp
@@ -50,6 +53,7 @@ union DrawOp
     LineDraw   l;
     RectDraw   r;
     CircleDraw c;
+    ArcDraw    a;
 }
 
 struct PointDraw
@@ -109,33 +113,67 @@ struct CircleDraw
 struct Circle2pDraw
 {
     DTYPE type;
-    Point p1;
-    Point p2;
+    Point p;
+    Point c;
 
     void Draw( Renderer* renderer, GridRect* drawRect )
     {
         import cls.spiro : Circle;
 
-        Coord r = Geom.Len( p1, p2 );
-        Circle( renderer, p1.x, p1.y, r );
+        Coord r = Line( p, c ).len();
+        Circle( renderer, p.x, p.y, r );
     }
 }
 
-auto pow(T)( T a )
+struct Circle3pDraw
 {
-    return a*a;
-}
-auto sqrt(T)( T a )
-{
-    import std.math, std.conv;
-    return std.math.sqrt( cast(float)a ).to!Coord;
-}
+    DTYPE type;
+    Point p1;
+    Point p2;
+    Point p3;
 
-struct Geom
-{
-    static
-    auto Len( Point p1, Point p2 )
+    void Draw( Renderer* renderer, GridRect* drawRect )
     {
-        return sqrt( pow(p2.x-p1.x) + pow(p2.y-p1.y) );
+        //
     }
 }
+
+struct ArcDraw
+{
+    DTYPE type;
+    Point p1; // start point
+    Point p2; // end point
+    Point c; // center
+
+    void Draw( Renderer* renderer, GridRect* drawRect )
+    {
+        import cls.spiro : Arc;
+    }
+}
+
+struct ArcP3Draw
+{
+    DTYPE type;
+    Point p1; // start point
+    Point p2; // middle point
+    Point p3; // end point
+
+    void Draw( Renderer* renderer, GridRect* drawRect )
+    {
+        import cls.spiro : Arc;
+    }
+}
+
+struct ArcRDraw
+{
+    DTYPE type;
+    Point p1; // start point
+    Point p2; // end point
+    Coord r;  // radius
+
+    void Draw( Renderer* renderer, GridRect* drawRect )
+    {
+        import cls.spiro : Arc;
+    }
+}
+
