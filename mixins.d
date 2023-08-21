@@ -329,6 +329,140 @@ lhs == rhs
 // expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
 lhs == rhs
 
+// expansion at C:\D\LDC\bin\..\import\std\variant.d(90,17)
+T _field_0LU;
+
+// expansion at C:\D\LDC\bin\..\import\std\variant.d(90,17)
+T _field_1LU;
+
+// expansion at C:\D\LDC\bin\..\import\std\variant.d(90,17)
+T _field_2LU;
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(467,13)
+enum int schema = 0;
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(467,13)
+enum int sequence = 0;
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(646,9)
+alias _0LU = Identity!(field[0LU]);alias schema = _0LU;alias _1LU = Identity!(field[1LU]);alias sequence = _1LU;
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(646,9)
+alias _0LU = Identity!(field[0LU]);alias _1LU = Identity!(field[1LU]);
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\getopt.d(1122,5)
+private ubyte _caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf;@property bool caseSensitive() @safe pure nothrow @nogc const { return (_caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf & 1U) != 0;}
+@property void caseSensitive(bool v) @safe pure nothrow @nogc { if (v) _caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf |= 1U;else _caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf &= cast(typeof(_caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf))(-1-cast(typeof(_caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf))1U);}
+@property bool bundling() @safe pure nothrow @nogc const { return (_caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf & 2U) != 0;}
+@property void bundling(bool v) @safe pure nothrow @nogc { if (v) _caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf |= 2U;else _caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf &= cast(typeof(_caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf))(-1-cast(typeof(_caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf))2U);}
+@property bool passThrough() @safe pure nothrow @nogc const { return (_caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf & 4U) != 0;}
+@property void passThrough(bool v) @safe pure nothrow @nogc { if (v) _caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf |= 4U;else _caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf &= cast(typeof(_caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf))(-1-cast(typeof(_caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf))4U);}
+@property bool stopOnFirstNonOption() @safe pure nothrow @nogc const { return (_caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf & 8U) != 0;}
+@property void stopOnFirstNonOption(bool v) @safe pure nothrow @nogc { if (v) _caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf |= 8U;else _caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf &= cast(typeof(_caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf))(-1-cast(typeof(_caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf))8U);}
+@property bool keepEndOfOptions() @safe pure nothrow @nogc const { return (_caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf & 16U) != 0;}
+@property void keepEndOfOptions(bool v) @safe pure nothrow @nogc { if (v) _caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf |= 16U;else _caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf &= cast(typeof(_caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf))(-1-cast(typeof(_caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf))16U);}
+@property bool required() @safe pure nothrow @nogc const { return (_caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf & 32U) != 0;}
+@property void required(bool v) @safe pure nothrow @nogc { if (v) _caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf |= 32U;else _caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf &= cast(typeof(_caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf))(-1-cast(typeof(_caseSensitive_bundling_passThrough_stopOnFirstNonOption_keepEndOfOptions_required__bf))32U);}
+
+// expansion at C:\D\LDC\bin\..\import\std\internal\memory.d(40,18)
+onOutOfMemoryError();
+
+// expansion at C:\D\LDC\bin\..\import\core\atomic.d(576,9)
+*cast(T*)&val+=mod
+
+// expansion at C:\D\LDC\bin\..\import\std\stdio.d(5304,38)
+core.stdc.stdio.stdin
+
+// expansion at C:\D\LDC\bin\..\import\core\atomic.d(576,9)
+*cast(T*)&val+=mod
+
+// expansion at C:\D\LDC\bin\..\import\core\atomic.d(576,9)
+*cast(T*)&val-=mod
+
+// expansion at C:\D\LDC\bin\..\import\core\atomic.d(576,9)
+*cast(T*)&val+=mod
+
+// expansion at C:\D\LDC\bin\..\import\std\stdio.d(5304,38)
+core.stdc.stdio.stdout
+
+// expansion at C:\D\LDC\bin\..\import\core\atomic.d(576,9)
+*cast(T*)&val+=mod
+
+// expansion at C:\D\LDC\bin\..\import\core\atomic.d(576,9)
+*cast(T*)&val-=mod
+
+// expansion at C:\D\LDC\bin\..\import\core\atomic.d(576,9)
+*cast(T*)&val+=mod
+
+// expansion at C:\D\LDC\bin\..\import\std\stdio.d(5304,38)
+core.stdc.stdio.stderr
+
+// expansion at C:\D\LDC\bin\..\import\core\atomic.d(576,9)
+*cast(T*)&val+=mod
+
+// expansion at C:\D\LDC\bin\..\import\core\atomic.d(576,9)
+*cast(T*)&val-=mod
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(467,13)
+enum int terminated = 0;
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(467,13)
+enum int status = 0;
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(646,9)
+alias _0LU = Identity!(field[0LU]);alias terminated = _0LU;alias _1LU = Identity!(field[1LU]);alias status = _1LU;
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(646,9)
+alias _0LU = Identity!(field[0LU]);alias _1LU = Identity!(field[1LU]);
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
 // expansion at source\cls\package.d(42,1)
 enum CLASSES
 {
@@ -419,6 +553,48 @@ a == b
 
 // expansion at
 .object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
+
+// expansion at
+.object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
+
+// expansion at
+.object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
+
+// expansion at
+.object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
+
+// expansion at
+.object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(646,9)
+alias _0LU = Identity!(field[0LU]);alias _1LU = Identity!(field[1LU]);
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(646,9)
+alias _0LU = Identity!(field[0LU]);alias _1LU = Identity!(field[1LU]);
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
 
 // expansion at source\cls\o\o.d(272,31)
 SDL_MOUSEMOTION
@@ -515,6 +691,45 @@ onOutOfMemoryError();
 
 // expansion at C:\D\LDC\bin\..\import\std\internal\memory.d(48,18)
 onOutOfMemoryError();
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs < rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs < rhs
+
+// expansion at
+.object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs < rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs < rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs == rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs < rhs
+
+// expansion at C:\D\LDC\bin\..\import\std\typecons.d(539,31)
+lhs < rhs
 
 // expansion at
 .object.size_t h = 0;foreach (i, T; typeof(p.tupleof))    static if(is(T* : const(.object.Object)*))         h = h * 33 + typeid(const(.object.Object)).getHash(cast(const void*)&p.tupleof[i]);    else         h = h * 33 + typeid(T).getHash(cast(const void*)&p.tupleof[i]);return h;
