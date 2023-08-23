@@ -9,7 +9,7 @@ import geom;
 
 struct Drawer
 {
-    mixin OMixin;
+    mixin OMixin!(O,Init);
 
     DList!DrawOp dops;
 
@@ -17,6 +17,51 @@ struct Drawer
     void Draw( O* o, Renderer* renderer, GridRect* drawRect )
     {
         _DrawDops( cast(Drawer*)o, renderer, drawRect );
+    }
+
+    struct Init
+    {
+        mixin StateMixin;
+
+        static
+        void to_StartPoint( O* o, D* d )
+        {
+            auto button = d.button;
+            auto gridsize = o.gridsize;
+
+            if ( d.type == SDL_MOUSEBUTTONDOWN )
+            if ( button.button & SDL_BUTTON_LMASK ) 
+            {
+                auto mousePoint = GridPoint( d.motion.x, d.motion.y, gridsize );
+                o.clickRel = mousePoint - o.point;
+                if ( o.selectable )
+                    Go!StartPoint( o );
+            }
+        }
+    }
+
+    struct StartPoint
+    {
+        mixin StateMixin;
+
+        static
+        void Draw( O* o, Renderer* renderer, GridRect* drawRect )
+        {
+            //
+        }
+
+    }
+
+    struct EndPoint
+    {
+        mixin StateMixin;
+
+        static
+        void Draw( O* o, Renderer* renderer, GridRect* drawRect )
+        {
+            //
+        }
+
     }
 }
 

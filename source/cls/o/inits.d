@@ -123,7 +123,7 @@ struct Init
 
     // Ways
     static
-    void go_Hover( O* o, D* d )
+    void to_Hover( O* o, D* d )
     {
         auto motion   = d.motion;
         auto gridsize = o.gridsize;

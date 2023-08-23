@@ -291,8 +291,8 @@ void Sense(T)( O* o, D* d )
 
 
 // Try
-//   go_Init()
-//   go_Hover()
+//   to_Init()
+//   to_Hover()
 //pragma( inline, true )
 void Go(T)( O* o, D* d )
 {
@@ -300,7 +300,7 @@ void Go(T)( O* o, D* d )
 
     static foreach( m; __traits( allMembers, T ) )
         static if ( __traits(isStaticFunction, __traits(getMember, T, m)) ) 
-            static if ( m.startsWith( "go_" ) )
+            static if ( m.startsWith( "to_" ) )
                 __traits(getMember, T, m)( o, d );
 }
 
@@ -843,10 +843,10 @@ void Send( O* o, XSDL_TYPE xsdl, void* a1, void* a2 )
 
 //ways
 //              INIT, HOVER, HOVERSELECT, DRAG, DROP,
-//INIT,                   1                            // go_Hover
-//HOVER,           1                   1               // go_Init, go_HoverSelect
-//HOVERSELECT,     1                         1         // go_Init, go_Drag
-//DRAG,            1                   1               // go_Init, go_HoverSelect
+//INIT,                   1                            // to_Hover
+//HOVER,           1                   1               // to_Init, to_HoverSelect
+//HOVERSELECT,     1                         1         // to_Init, to_Drag
+//DRAG,            1                   1               // to_Init, to_HoverSelect
 //DROP,
 
 // Tos( XSDL_IN_MOUSE )
@@ -854,10 +854,10 @@ void Send( O* o, XSDL_TYPE xsdl, void* a1, void* a2 )
 struct Ways
 {
     //                     INIT, HOVER, HOVERSELECT, DRAG, DROP,
-    bool[5] Init        = [   0,     1,           0,    0,    0 ]; // go_Hover
-    bool[5] Hover       = [   1,     0,           1,    0,    0 ]; // go_Init, go_HoverSelect
-    bool[5] Hoverselect = [   1,     1,           0,    1,    0 ]; // go_Init, go_Drag
-    bool[5] Drag        = [   1,     1,           1,    0,    0 ]; // go_Init, go_HoverSelect
+    bool[5] Init        = [   0,     1,           0,    0,    0 ]; // to_Hover
+    bool[5] Hover       = [   1,     0,           1,    0,    0 ]; // to_Init, to_HoverSelect
+    bool[5] Hoverselect = [   1,     1,           0,    1,    0 ]; // to_Init, to_Drag
+    bool[5] Drag        = [   1,     1,           1,    0,    0 ]; // to_Init, to_HoverSelect
     bool[5] Drop        = [   0,     0,           0,    0,    0 ];
 }
 
@@ -882,10 +882,10 @@ void Check(T)()
         {
             static if ( b )
             static if ( __traits(hasMember, mixin(__MODULE__), m ) )
-            static if ( !__traits(hasMember, mixin(m), "go_" ~ TA[i]) )
+            static if ( !__traits(hasMember, mixin(m), "to_" ~ TA[i]) )
                ss ~= format!
 "
-    void go_%s( o, d )
+    void to_%s( o, d )
     {
         //
     }"( TA[i] );
@@ -908,7 +908,7 @@ struct %s
         if ( s.length > 0)
         {
             writeln( s );
-            assert(0, "Require go_...");
+            assert(0, "Require to_...");
         }
     }
 }
@@ -923,7 +923,7 @@ this()
 //   Sense( o, d );
 //     on_...( o, d );
 //   Go( o, d );
-//     go_...( o, d );
+//     to_...( o, d );
 
 // State
 //   0b0000_0001 Init

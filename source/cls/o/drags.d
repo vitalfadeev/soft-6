@@ -66,7 +66,7 @@ struct Drag
 
 
     static
-    void go_Hover( O* o, D* d )
+    void to_Hover( O* o, D* d )
     {
         if ( d.type == SDL_MOUSEBUTTONUP ) 
         if ( d.button.button & SDL_BUTTON_LMASK ) 

@@ -370,11 +370,6 @@ struct Point(T)
         return Point!T( x + b.x, y + b.y );
     }
 
-    Point!T opBinary( string op : "-" )( Point!T b )
-    {
-        return Point!T( x - b.x, y - b.y );
-    }
-
     Point!T opBinary( string op : "*" )( T l )
     {
         return Point!T( x * l, y * l );
@@ -442,26 +437,22 @@ void Spiro5( Renderer* renderer, int cx, int cy, int r )
     // Rotate to angle = 2 PI / L
     // L rotations
     alias T = real;
-    T R = cast(T)r;
+    alias R = r+0.5;
     T L = 2 * PI * R;
     T angle = 2 * PI / L; // 1 / R
     T c = cos( angle );
     T s = sin( angle );
 
-    auto A = Point!T( R, 0 );
+    auto A = Point!T( R+0.5, 0+0.5 );
 
-    // Rotate CW
     // A x,y
     // AB = l
     // B = A + A.norm * l * angle
-    auto AR = Point!T( 1, 0 );
-
     for ( int i=0; i < L; i++ )
     {
         Drawpixel5!T( renderer, cx, cy, A );
 
-        AR = AR.Rotate( angle ); // SIMD 
-        A = AR * R;              //
+        A = A + A.Normalize().Normal().Rotate( angle );
     }
 }
 

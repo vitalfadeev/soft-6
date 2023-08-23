@@ -43,7 +43,7 @@ struct Hover
 
 
     static
-    void go_Init( O* o, D* d )
+    void to_Init( O* o, D* d )
     {
         auto motion   = d.motion;
         auto gridsize = o.gridsize;
@@ -61,7 +61,7 @@ struct Hover
     }
 
     static
-    void go_Hoverselect( O* o, D* d )
+    void to_Hoverselect( O* o, D* d )
     {
         auto button = d.button;
         auto gridsize = o.gridsize;
