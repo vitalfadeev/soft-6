@@ -12,22 +12,45 @@ struct Drawer
     mixin OMixin!(O,Init);
 
     DList!DrawOp dops;
+    PreviewPoint pre;
 
-    static
-    void Draw( O* o, Renderer* renderer, GridRect* drawRect )
-    {
-        _DrawDops( cast(Drawer*)o, renderer, drawRect );
-    }
+    //static
+    //void Draw( O* o, Renderer* renderer, GridRect* drawRect )
+    //{
+    //    auto pre = cast(O*)&(cast(Drawer*)o).pre;
+    //    PreviewPoint.Draw( o, renderer, drawRect );
+    //    _DrawDops( cast(Drawer*)o, renderer, drawRect );
+    //}
 
     struct Init
     {
         mixin StateMixin;
 
         static
+        void on_XSDL_OVER_MOUSE( O* o, D* d )
+        {
+            // preview start point
+            (cast(Drawer*)o).pre.point = GridPoint( d.motion.x, d.motion.y, gridsize );
+        }
+        
+        static
+        void on_SDL_MOUSEMOTION( O* o, D* d )
+        {
+            // preview start point
+            (cast(Drawer*)o).pre.point = GridPoint( d.motion.x, d.motion.y, gridsize );
+        }
+
+        static
+        void Draw( O* o, Renderer* renderer, GridRect* drawRect )
+        {
+            cls.o.Init.Draw( o, renderer, drawRect );
+            PreviewPoint.Draw( cast(O*)( &((cast(Drawer*)o).pre) ), renderer, drawRect );
+        }
+
+        static
         void to_StartPoint( O* o, D* d )
         {
             auto button = d.button;
-            auto gridsize = o.gridsize;
 
             if ( d.type == SDL_MOUSEBUTTONDOWN )
             if ( button.button & SDL_BUTTON_LMASK ) 
@@ -64,6 +87,22 @@ struct Drawer
 
     }
 }
+
+struct PreviewPoint
+{
+    mixin OMixin;
+
+    static
+    void Draw( O* o, Renderer* renderer, GridRect* drawRect )
+    {
+        import draw.circle;
+        int cx = o.x + o.w/2;
+        int cy = o.y + o.h/2;
+        int r  = 5;
+        Circle( renderer, cx, cy, r );
+    }    
+}
+
 
 void _DrawDops( Drawer* o, Renderer* renderer, GridRect* drawRect )
 {
@@ -108,8 +147,9 @@ struct PointDraw
 
     void Draw( Renderer* renderer, GridRect* drawRect )
     {
+        import draw.point : Point;
         SDL_SetRenderDrawColor( renderer, 55, 55, 55, SDL_ALPHA_OPAQUE );
-        SDL_RenderDrawPoint( renderer, p.x , p.y );
+        Point( renderer, p.x , p.y );
     }
 }
 
@@ -121,8 +161,9 @@ struct LineDraw
 
     void Draw( Renderer* renderer, GridRect* drawRect )
     {
+        import draw.line : Line;
         SDL_SetRenderDrawColor( renderer, 55, 55, 55, SDL_ALPHA_OPAQUE );
-        SDL_RenderDrawLine( renderer, p1.x, p1.y, p2.x, p2.y );
+        Line( renderer, p1.x, p1.y, p2.x, p2.y );
     }
 }
 
@@ -134,10 +175,11 @@ struct RectDraw
 
     void Draw( Renderer* renderer, GridRect* drawRect )
     {
+        import draw.rect : Rect;
         SDL_Rect r = { p1.x, p1.y, p2.x-p1.x, p2.y-p1.y};
 
         SDL_SetRenderDrawColor( renderer, 55, 55, 55, SDL_ALPHA_OPAQUE );
-        SDL_RenderDrawRect( renderer, &r );
+        Rect( renderer, &r );
     }
 }
 
@@ -149,8 +191,7 @@ struct CircleDraw
 
     void Draw( Renderer* renderer, GridRect* drawRect )
     {
-        import cls.spiro : Circle;
-
+        import draw.circle : Circle;
         Circle( renderer, p.x, p.y, r );
     }
 }
@@ -163,7 +204,7 @@ struct Circle2pDraw
 
     void Draw( Renderer* renderer, GridRect* drawRect )
     {
-        import cls.spiro : Circle;
+        import draw.circle : Circle;
 
         Coord r = Line( p, c ).len();
         Circle( renderer, p.x, p.y, r );
@@ -188,11 +229,12 @@ struct ArcDraw
     DTYPE type;
     Point p1; // start point
     Point p2; // end point
-    Point c; // center
+    Point c;  // center
 
     void Draw( Renderer* renderer, GridRect* drawRect )
     {
-        import cls.spiro : Arc;
+        import draw.arc : Arc;
+        //Arc( renderer, cx, cy, x1, y1, x2, y2 );
     }
 }
 
@@ -205,7 +247,7 @@ struct ArcP3Draw
 
     void Draw( Renderer* renderer, GridRect* drawRect )
     {
-        import cls.spiro : Arc;
+        import draw.arc : Arc;
     }
 }
 
@@ -218,7 +260,8 @@ struct ArcRDraw
 
     void Draw( Renderer* renderer, GridRect* drawRect )
     {
-        import cls.spiro : Arc;
+        import draw.arc : Arc;
     }
 }
+
 

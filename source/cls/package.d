@@ -5,6 +5,7 @@ public import cls.chip;
 public import cls.chip.chipout;
 public import cls.chips;
 public import cls.spiro;
+public import cls.drawer;
 
 //static foreach( m; __traits( allMembers, __traits(parent,{}) ) )
     //pragma( msg, m );
@@ -22,6 +23,7 @@ string ClassesMixin()
     s ~= "   ChipOut,\n";
     s ~= "   Chips,\n";
     s ~= "   Spiro,\n";
+    s ~= "   Drawer,\n";
     s ~= "};\n";
 
     return s;

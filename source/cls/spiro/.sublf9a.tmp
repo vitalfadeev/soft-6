@@ -28,7 +28,6 @@ struct Spiro
     static
     void _DrawSpiro( O* o, Renderer* renderer )
     {
-        auto gridsize = o.gridsize;
         auto x = o.x;
         auto y = o.y;
         auto w = o.w;
@@ -52,7 +51,6 @@ struct Spiro
     static
     void _DrawCircle2( O* o, Renderer* renderer )
     {
-        auto gridsize = o.gridsize;
         auto x = o.x;
         auto y = o.y;
         auto w = o.w;
@@ -74,7 +72,6 @@ struct Spiro
     static
     void _DrawCircle3( O* o, Renderer* renderer )
     {
-        auto gridsize = o.gridsize;
         auto x = o.x;
         auto y = o.y;
         auto w = o.w;
@@ -96,7 +93,6 @@ struct Spiro
     static
     void _DrawCircle4( O* o, Renderer* renderer )
     {
-        auto gridsize = o.gridsize;
         auto x = o.x;
         auto y = o.y;
         auto w = o.w;
@@ -119,7 +115,6 @@ struct Spiro
     static
     void _DrawCircle5( O* o, Renderer* renderer )
     {
-        auto gridsize = o.gridsize;
         auto x = o.x;
         auto y = o.y;
         auto w = o.w;

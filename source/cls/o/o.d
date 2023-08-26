@@ -100,7 +100,6 @@ struct O
         GridRect           rect;
         GridPoint          point;
     }
-    Coord     gridsize = 48;
     Color     fg       = Color(  199, 199,  199, SDL_ALPHA_OPAQUE );
     Color     bg       = Color(  0, 0,  0, SDL_ALPHA_OPAQUE );
     //
@@ -449,7 +448,6 @@ void ODraw( O* o, Renderer* renderer, GridRect* drawRect )
 static
 void _DrawBackground( O* o, Renderer* renderer )
 {
-    auto gridsize = o.gridsize;
     auto x = o.x;
     auto y = o.y;
     auto w = o.w;
@@ -463,7 +461,6 @@ void _DrawBackground( O* o, Renderer* renderer )
 static
 void _DrawGrid( O* o, Renderer* renderer )
 {
-    auto gridsize = o.gridsize;
     auto x = o.x;
     auto y = o.y;
     auto w = o.w;
@@ -482,7 +479,6 @@ void _DrawGrid( O* o, Renderer* renderer )
 static
 void _DrawLines( O* o, Renderer* renderer )
 {
-    auto gridsize = o.gridsize;
     auto x = o.x;
     auto y = o.y;
     auto w = o.w;

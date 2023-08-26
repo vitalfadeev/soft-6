@@ -10,6 +10,7 @@ alias m8s  = ubyte[];
 alias m32  = uint;
 alias mptr = m*;
 alias Timestamp = ReturnType!SDL_GetTicks;
+Coord gridsize = 48;
 
 alias PX        = typeof(SDL_Rect.x);
 alias Coord     = typeof(SDL_Rect.x);

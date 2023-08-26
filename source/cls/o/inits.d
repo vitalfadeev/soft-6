@@ -33,7 +33,6 @@ struct Init
     static
     void _DrawBackground( O* o, Renderer* renderer )
     {
-        auto gridsize = o.gridsize;
         auto x = o.x;
         auto y = o.y;
         auto w = o.w;
@@ -47,7 +46,6 @@ struct Init
     static
     void _DrawGrid( O* o, Renderer* renderer )
     {
-        auto gridsize = o.gridsize;
         auto x = o.x;
         auto y = o.y;
         auto w = o.w;
@@ -66,7 +64,6 @@ struct Init
     static
     void _DrawLines( O* o, Renderer* renderer )
     {
-        auto gridsize = o.gridsize;
         auto x = o.x;
         auto y = o.y;
         auto w = o.w;
@@ -126,7 +123,6 @@ struct Init
     void to_Hover( O* o, D* d )
     {
         auto motion   = d.motion;
-        auto gridsize = o.gridsize;
 
         if ( d.type == SDL_MOUSEMOTION )
         if ( o.Is( GridPoint( motion.x, motion.y, gridsize ) ) )

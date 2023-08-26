@@ -34,7 +34,6 @@ struct Drag
     static
     void _DrawLines( O* o, Renderer* renderer )
     {
-        auto gridsize = o.gridsize;
         auto x = o.x;
         auto y = o.y;
         auto w = o.w;
@@ -54,7 +53,6 @@ struct Drag
     static
     void on_SDL_MOUSEMOTION( O* o, D* d )
     {
-        auto gridsize = o.gridsize;
 
         if ( d.motion.state & SDL_BUTTON_LMASK )
         {

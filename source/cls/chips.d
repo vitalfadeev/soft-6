@@ -59,5 +59,9 @@ struct Chips
         spiro.hoverable = true;
         Arrange( cast(O*)spiro );
         Eat( o, cast(O*)spiro );
+
+        auto drawer = Ma( "Drawer" );
+        drawer.rect = GridRect( 7, 0, 5, 2 );
+        Eat( o, cast(O*)drawer );
     }
 }

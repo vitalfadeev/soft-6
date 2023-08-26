@@ -31,7 +31,6 @@ struct Hoverselect
     static
     void _DrawLines( O* o, Renderer* renderer )
     {
-        auto gridsize = o.gridsize;
         auto x = o.x;
         auto y = o.y;
         auto w = o.w;
@@ -75,7 +74,6 @@ struct Hoverselect
     void to_Drag( O* o, D* d )
     {
         auto motion   = d.motion;
-        auto gridsize = o.gridsize;
 
         if ( d.type == SDL_MOUSEMOTION )
         if ( d.motion.state & SDL_BUTTON_LMASK )

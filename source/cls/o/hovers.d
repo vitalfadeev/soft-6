@@ -30,7 +30,6 @@ struct Hover
     static
     void _DrawBackground( O* o, Renderer* renderer )
     {
-        auto gridsize = o.gridsize;
         auto x = o.x;
         auto y = o.y;
         auto w = o.w;
@@ -46,7 +45,6 @@ struct Hover
     void to_Init( O* o, D* d )
     {
         auto motion   = d.motion;
-        auto gridsize = o.gridsize;
 
         if ( d.type == SDL_MOUSEMOTION )
         {
@@ -64,7 +62,6 @@ struct Hover
     void to_Hoverselect( O* o, D* d )
     {
         auto button = d.button;
-        auto gridsize = o.gridsize;
 
         if ( d.type == SDL_MOUSEBUTTONDOWN )
         if ( button.button & SDL_BUTTON_LMASK ) 
